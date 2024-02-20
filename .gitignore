@@ -1,0 +1,14 @@
+# Project exclude paths
+/.gradle/
+/Cinema Room REST Service (Java)/task/build/
+/Cinema Room REST Service (Java)/task/build/classes/java/main/
+/Cinema Room REST Service (Java)/task/build/classes/java/test/
+/Topics/Builder/Builder/build/
+/Topics/Builder/Builder/build/classes/java/main/
+/Topics/Increment and decrement/Decrement all/build/
+/Topics/Increment and decrement/Decrement all/build/classes/java/main/
+/Topics/Inner classes/Improve your vehicle/build/
+/Topics/Inner classes/Improve your vehicle/build/classes/java/main/
+/Topics/The for-loop/The count of numbers divisible by N/build/
+/Topics/The for-loop/The count of numbers divisible by N/build/classes/java/main/
+.idea
