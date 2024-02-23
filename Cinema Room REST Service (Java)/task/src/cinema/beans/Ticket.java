@@ -3,7 +3,7 @@ package cinema.beans;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Seat {
+public class Ticket {
 
     private int row;
     private int column;
@@ -14,10 +14,10 @@ public class Seat {
     @JsonIgnore
     private boolean taken;
 
-    public Seat() {
+    public Ticket() {
     }
 
-    public Seat(int row, int column, int cost) {
+    public Ticket(int row, int column, int cost) {
         this.row = row;
         this.column = column;
         this.cost = cost;

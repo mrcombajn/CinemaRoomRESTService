@@ -2,35 +2,44 @@ package cinema.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SeatToken {
+public class TicketReservation {
 
     @JsonProperty("token")
-    private String UUID;
+    private String uuid;
 
     @JsonProperty("ticket")
-    private Seat seat;
+    private Ticket seat;
 
-    public SeatToken() {
+    public TicketReservation() {
     }
 
-    public SeatToken(String UUID, Seat seat) {
-        this.UUID = UUID;
+    public TicketReservation(String uuid, Ticket seat) {
+        this.uuid = uuid;
         this.seat = seat;
     }
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public Seat getSeat() {
+    public Ticket getSeat() {
         return seat;
     }
 
-    public void setSeat(Seat seat) {
+    public void setSeat(Ticket seat) {
         this.seat = seat;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == this) return true;
+
+        TicketReservation ticketReservation = (TicketReservation) obj;
+        return this.uuid.equals(ticketReservation.getUuid());
     }
 }
