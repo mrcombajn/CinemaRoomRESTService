@@ -1,6 +1,5 @@
-package cinema.beans;
+package cinema.beans.tickets;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Ticket {
@@ -11,9 +10,6 @@ public class Ticket {
     @JsonProperty("price")
     private int cost;
 
-    @JsonIgnore
-    private boolean taken;
-
     public Ticket() {
     }
 
@@ -21,7 +17,6 @@ public class Ticket {
         this.row = row;
         this.column = column;
         this.cost = cost;
-        this.taken = false;
     }
 
     public int getRow() {
@@ -46,14 +41,6 @@ public class Ticket {
 
     public void setCost(int cost) {
         this.cost = cost;
-    }
-
-    public void setTaken(boolean taken) {
-        this.taken = taken;
-    }
-
-    public boolean isTaken() {
-        return taken;
     }
 
 }
