@@ -1,4 +1,4 @@
-package cinema.beans;
+package cinema.beans.tickets;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,14 +8,14 @@ public class TicketReservation {
     private String uuid;
 
     @JsonProperty("ticket")
-    private Ticket seat;
+    private Ticket ticket;
 
     public TicketReservation() {
     }
 
-    public TicketReservation(String uuid, Ticket seat) {
+    public TicketReservation(String uuid, Ticket ticket) {
         this.uuid = uuid;
-        this.seat = seat;
+        this.ticket = ticket;
     }
 
     public String getUuid() {
@@ -27,11 +27,11 @@ public class TicketReservation {
     }
 
     public Ticket getSeat() {
-        return seat;
+        return ticket;
     }
 
-    public void setSeat(Ticket seat) {
-        this.seat = seat;
+    public void setSeat(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     @Override
