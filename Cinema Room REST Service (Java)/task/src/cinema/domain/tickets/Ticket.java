@@ -1,4 +1,4 @@
-package cinema.beans.tickets;
+package cinema.domain.tickets;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

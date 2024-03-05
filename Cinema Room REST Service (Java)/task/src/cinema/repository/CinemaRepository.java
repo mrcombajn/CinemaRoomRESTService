@@ -1,57 +1,81 @@
 package cinema.repository;
 
-import cinema.beans.Seat;
-import cinema.utils.Utils;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import cinema.domain.tickets.Ticket;
+import cinema.domain.tickets.TicketReservation;
+import cinema.exceptions.TicketPurchaseException;
+import cinema.repository.db.SeatsDatabase;
+import cinema.repository.helpers.TicketTokenHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class CinemaRepository {
 
-    @JsonProperty("total_rows")
-    int availableRows = 9;
+    private final SeatsDatabase seatsDatabase;
 
-    @JsonProperty("total_columns")
-    int availableColumns = 9;
+    @JsonIgnore
+    List<TicketReservation> activeReservations = new ArrayList<>();
 
-    @JsonProperty("available_seats")
-    List<Seat> totalSeats;
-
-    public CinemaRepository() {
-        totalSeats = new ArrayList<>();
-
-        for (int i = 0; i < availableRows; i++) {
-            for (int j = 0; j < availableRows; j++) {
-                int cost = ;
-                totalSeats.add(new Seat(i + 1, j + 1, ));
-            }
-        }
+    @Autowired
+    public CinemaRepository(SeatsDatabase seatsDatabase) {
+        this.seatsDatabase = seatsDatabase;
     }
 
-    public int getAvailableRows() {
-        return availableRows;
+    public Map<String, Object> getAllSeats() {
+        Map<String, Object> seatDatabase = new HashMap<>();
+        seatDatabase.put("rows", seatsDatabase.getAvailableRows());
+        seatDatabase.put("columns", seatsDatabase.getAvailableColumns());
+        seatDatabase.put("seats", seatsDatabase.getTotalSeats());
+        return seatDatabase;
     }
 
-    public void setAvailableRows(int availableRows) {
-        this.availableRows = availableRows;
+    public boolean isSeatFree(int row, int column) {
+        return seatsDatabase.isSeatFree(row, column);
     }
 
-    public int getAvailableColumns() {
-        return availableColumns;
+    public int getSeatPrice(int row, int column) {
+        return  seatsDatabase.getSeatPrice(row, column);
     }
 
-    public void setAvailableColumns(int availableColumns) {
-        this.availableColumns = availableColumns;
+    public TicketReservation filterActiveReservations(String UUID) {
+        return activeReservations.stream()
+                .filter(r -> r.getUuid().equals(UUID))
+                .findFirst()
+                .orElseThrow(() -> new TicketPurchaseException("Wrong token!"));
     }
 
-    public List<Seat> getTotalSeats() {
-        return totalSeats;
+    public Integer calculateIncome() {
+        return activeReservations
+                .stream()
+                .map(tr -> tr.getTicket().getCost())
+                .reduce(0, Integer::sum);
     }
 
-    public void setTotalSeats(List<Seat> totalSeats) {
-        this.totalSeats = totalSeats;
+    public void releaseSeat(TicketReservation ticketReservation) {
+        seatsDatabase.releaseSeat(ticketReservation.getTicket().getRow(), ticketReservation.getTicket().getColumn());
     }
+
+    public void addTicketReservation(TicketReservation ticketReservation) {
+        activeReservations.add(ticketReservation);
+    }
+
+    public void removeTicketReservation(TicketReservation ticketReservation) {
+        activeReservations.remove(ticketReservation);
+    }
+
+    public void occupySeat(TicketReservation reservation) {
+        seatsDatabase.occupySeat(reservation.getTicket().getRow(), reservation.getTicket().getColumn());
+    }
+
+    public Integer getPurchasedTicketsCount() {
+        return activeReservations.size();
+    }
+
+    public Integer getAvailableSeats() {
+        return seatsDatabase.getTotalSeats().size() - activeReservations.size();
+    }
+
 }
