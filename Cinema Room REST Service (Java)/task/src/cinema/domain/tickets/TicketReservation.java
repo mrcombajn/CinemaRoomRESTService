@@ -1,4 +1,4 @@
-package cinema.beans.tickets;
+package cinema.domain.tickets;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,7 +26,7 @@ public class TicketReservation {
         this.uuid = uuid;
     }
 
-    public Ticket getSeat() {
+    public Ticket getTicket() {
         return ticket;
     }
 

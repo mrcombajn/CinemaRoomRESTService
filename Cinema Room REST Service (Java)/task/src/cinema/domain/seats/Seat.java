@@ -1,4 +1,4 @@
-package cinema.beans.seats;
+package cinema.domain.seats;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
